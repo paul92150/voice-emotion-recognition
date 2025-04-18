@@ -15,6 +15,7 @@ def run_tpot_automl(X_train, y_train, X_test, y_test, label_encoder, generations
         population_size=population_size,
         random_state=42,
         n_jobs=1,
+        max_time_mins=None
     )
 
     print("[TPOT] Starting TPOT fit...")

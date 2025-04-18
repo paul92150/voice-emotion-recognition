@@ -14,7 +14,7 @@ from sklearn.model_selection import train_test_split
 # === CONFIGURATION ===
 AUDIO_DIR = "data/dataset1"
 LABEL_POSITION = 5          # character index in filename to extract label
-N_MFCC = 89
+N_MFCC = 13
 TEST_SIZE = 0.2
 RANDOM_SEED = 42
 

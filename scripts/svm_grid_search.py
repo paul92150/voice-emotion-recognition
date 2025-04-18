@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report
-from joblib import dump
 
 from _setup_path import *
 from src.features import extract_mfcc_librosa
@@ -82,7 +81,3 @@ print("\n[GRID SEARCH] Best parameters:", grid.best_params_)
 y_pred = grid.predict(X_test)
 print("\n[GRID SEARCH] Classification Report:")
 print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
-
-# === Save best model ===
-dump(grid.best_estimator_, "models/best_svm_model.joblib")
-print("\n✅ Best SVM model saved to models/best_svm_model.joblib")
