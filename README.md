@@ -1,26 +1,22 @@
-# 🎙️ Voice Emotion Recognition
+# Voice Emotion Recognition
 
-This project implements a machine learning pipeline to classify **emotions in human voice** using MFCC features extracted from audio recordings.
+This project implements a machine learning pipeline for the classification of emotions from human voice recordings, using MFCC features as input.
 
-It supports multiple models (SVM, Logistic Regression) and provides tools for feature selection (Mutual Information), hyperparameter tuning, and AutoML experiments (TPOT, H2O).
+It supports multiple supervised models (SVM, Logistic Regression), provides feature selection via Mutual Information, and includes AutoML experiments with TPOT and H2O. The codebase is modular, script-based (no notebooks), and designed for reproducibility.
 
----
+## Features
 
-## 🚀 Features
+- MFCC feature extraction with Librosa
+- Feature selection using Mutual Information
+- Hyperparameter tuning via grid search and cross-validation
+- AutoML experiments using TPOT and H2O
+- Evaluation metrics: precision, recall, F1-score, accuracy
+- Clean train/test split and preprocessing pipeline
+- Structured, modular codebase without reliance on notebooks
 
-- 🎧 MFCC feature extraction using Librosa  
-- 📊 Feature selection (Mutual Information)  
-- 🔍 Grid Search with cross-validation for SVM  
-- 🤖 AutoML with TPOT and H2O  
-- 📈 Model evaluation with precision, recall, F1-score  
-- 📁 Modular and organized codebase (no notebooks!)  
-- ✅ Clean training/testing split and preprocessing  
+## Project Structure
 
----
-
-## 🗂️ Project Structure
-
-```
+```text
 voice-emotion-recognition/
 ├── data/
 │   ├── raw/                ← Place your audio dataset here (ignored by Git)
@@ -37,53 +33,35 @@ voice-emotion-recognition/
 └── .gitignore              ← Keeps datasets and model files out of Git
 ```
 
----
-
-## 📦 Installation
-
-1. **Clone the repo**:
+## Installation
 
 ```bash
 git clone https://github.com/Paul92150/voice-emotion-recognition.git
 cd voice-emotion-recognition
-```
-
-2. **Create a virtual environment (recommended)**
-
-```bash
 python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-```
-
-3. **Install dependencies**:
-
-```bash
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
----
+## Data Setup
 
-## 📁 Data Setup
+The dataset should be placed in:
 
-This repo assumes your dataset is stored in:
-
-```
+```text
 data/raw/wav/
 ```
 
-You can use datasets like:
-- **Emo-DB** (Berlin Database of Emotional Speech)
-- **CREMA-D**, **RAVDESS**, etc.
+Supported datasets include:
+- Emo-DB (Berlin Database of Emotional Speech)
+- CREMA-D
+- RAVDESS
+- Other compatible WAV-based datasets
 
-> ⚠️ The `data/raw/wav/` folder is ignored by Git to keep the repo light and personal-data-free.
+The `data/raw/wav/` folder is excluded from version control via `.gitignore` to prevent uploading personal or large files.
 
----
+## Emotion Label Mapping
 
-## 🏷️ Emotion Label Mapping
-
-This project assumes emotion labels are encoded in the filenames using a known convention (e.g., Emo-DB or CREMA-D).
-
-If you're using Emo-DB, you can use the default mapping:
+By default, the system expects emotion labels to be encoded in the filenames (as is common with datasets like Emo-DB or CREMA-D). For example, using Emo-DB:
 
 ```python
 emotion_mapping = {
@@ -97,74 +75,66 @@ emotion_mapping = {
 }
 ```
 
-📌 **Using a different dataset?** Make sure to update both:
-- the `emotion_mapping` dictionary (character → emotion name)
-- the `label_position` (index of the label character in filenames)
+If you are using a different dataset, make sure to:
+- Update the `emotion_mapping` dictionary
+- Adjust the `label_position` (character index in the filename)
 
-These are typically defined at the top of each script (e.g., `train_svm.py`, `automl_tpot.py`, etc.).
+These values are typically configured at the top of the relevant scripts (e.g., `train_svm.py`, `automl_tpot.py`).
 
-> ⚠️ If no mapping is provided or a label is missing from the mapping, the corresponding file will be **skipped** during training.
+Files with missing or unmapped labels are automatically skipped during training.
 
----
+## How to Run
 
-## 🧪 How to Run
-
-### 🧠 Train an SVM:
+### Train an SVM Classifier
 
 ```bash
 python scripts/train_svm.py
 ```
 
-### 🔍 Run Grid Search for Best SVM Parameters:
+### Run Grid Search for Optimal SVM Hyperparameters
 
 ```bash
 python scripts/grid_search.py
 ```
 
-### 🤖 Run TPOT AutoML:
+### Run TPOT AutoML
 
 ```bash
 python scripts/automl_tpot.py
 ```
 
-### 📊 Analyze MFCCs via Mutual Information:
+### Perform Feature Selection (Mutual Information)
 
 ```bash
 python scripts/feature_selection_mi.py
 ```
 
----
+## Example Results (TPOT AutoML)
 
-## 🧠 Example Results (TPOT AutoML)
-
-```
+```text
 Accuracy: 73%
 F1-score (macro avg): 0.69
 Best pipeline: MinMaxScaler → RFE → XGBoostClassifier
 ```
 
-📌 The dataset was relatively small, and AutoML reached results comparable to hand-tuned SVM.
+Note: These results were obtained on a relatively small dataset and are comparable to those of manually tuned SVMs.
 
----
-
-## 👤 Author
+## Author
 
 **Paul Lemaire**  
-Student at CentraleSupélec  
-[LinkedIn](https://www.linkedin.com/in/paul-lemaire-aa0369289) • [GitHub](https://github.com/Paul92150)
+MSc Candidate, CentraleSupélec  
+LinkedIn: https://www.linkedin.com/in/paul-lemaire-aa0369289  
+GitHub: https://github.com/Paul92150
 
----
+## Future Improvements
 
-## 🛠️ Future Improvements
+- Add support for CSV-based emotion labeling metadata
+- Integrate ROC curve visualizations for evaluation
+- Add support for additional datasets (e.g., TESS, SAVEE)
+- Implement a configuration file (`config.yaml`) for parameter control
+- Develop a test suite to validate pipeline integrity
 
-- 📦 Add support for metadata-based emotion labeling (e.g., from CSV)
-- 📊 Add ROC curve visualizations
-- 🎯 Integrate more datasets (e.g., RAVDESS, TESS)
-- ⚙️ Add configuration file (e.g., `config.yaml`) to make scripts more flexible
-- 🧪 Add test suite for pipeline robustness
+## License
 
----
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
